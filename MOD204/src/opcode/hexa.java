@@ -82,43 +82,6 @@ public class hexa extends frame{
 
     }
     
-      // LABEL FIRST BEFORE BC, A-B, BC FIRST BEFORE LABEL, B-A
-//    public static String distance(String offset, ArrayList<String[]> code){
-//        String label = offset.concat(":");
-//        int A=0, B=0;
-// /*       for(int i = 0; i<code.size(); i++){
-////            if((code.get(i)[0].compareToIgnoreCase("BC") == 0 || code.get(i)[0].compareToIgnoreCase("BLTC") == 0) && A == 0 )
-////                if(code.get(i)[1].compareToIgnoreCase(offset) == 0 || code.get(i)[3].compareToIgnoreCase(offset) == 0  )
-////                {
-////                    A = i;  
-////                }
-////            if(code.get(i)[0].compareToIgnoreCase(labelcol) == 0)
-////            {
-////                 B = i;
-////            }
-//
-//               if(Arrays.toString(code.get(i)).contains(offset))
-//                   A=i;
-//               else if(Arrays.toString(code.get(i)).contains(labelcol))
-//                  B=i;
-//        }
-//        
-//                return Integer.toString(B-A-1);
-//               */ 
-// 
-//               for(int i = 0; i<code.size(); i++){
-//            if((code.get(i)[0].equalsIgnoreCase("BC")|| code.get(i)[0].equalsIgnoreCase("BLTC")) && A == 0 )
-//                if(code.get(i)[1].equalsIgnoreCase(offset))
-//                {
-//                    A = i;  
-//                }
-//            if(code.get(i)[0].equalsIgnoreCase(label))
-//            {
-//             B = i;
-//            }
-//    }   
-//                return Integer.toString(B-A-1);
-// }
 public static String distance(String offset, ArrayList<String[]> code){
         String label = offset.concat(":");
         int A=0, B=0;
@@ -205,12 +168,21 @@ public static String distance(String offset, ArrayList<String[]> code){
 		return in;
 	}
     
+    /**
+     * DADDIU 
+     * @param one  REGISTER DESTINATION
+     * @param two  REGISTER SOURCE
+     * @param three IMMEDIATE VALUE 
+     */
     public static void temp(String opc, String one, String two, String three, Code[] c, int i){
         StringBuilder stringBuilder = new StringBuilder();
         String finalString, hexStr;
         String r1="", r2="";
         
         int decimal;
+        
+        if(!checkReg(one) || !checkReg(two))
+             errorscreen.append("Error: Invalid Register.");
         
         if(one.length() == 3 && two.length() == 3)
         {
@@ -231,9 +203,8 @@ public static String distance(String offset, ArrayList<String[]> code){
             r2 = two.substring(1, 3);
         }
         
-        if(Integer.parseInt(r1)>32 || Integer.parseInt(r2)>32 ||Integer.parseInt(r1)<0||Integer.parseInt(r2)<0 ){
-            errorscreen.append("Error: Invalid Register.");
-        }
+        
+        
         stringBuilder.append(opc);
         stringBuilder.append(decimalToBinary(r2,5));
         stringBuilder.append(decimalToBinary(r1,5));
@@ -255,13 +226,15 @@ public static String distance(String offset, ArrayList<String[]> code){
     }
     
     
-    
+    /**
+     * DADDU 
+     */
     public static void tempdaddu(String opc, String one, String two, String three, Code[] c, int i){
         StringBuilder stringBuilder = new StringBuilder();
         String finalString, hexStr;
         
      
-         if(!checkReg(one) && checkReg(two) && checkReg(three))
+         if(!checkReg(one) || !checkReg(two) || !checkReg(three))
              errorscreen.append("Error: Invalid Register.");
         
         char r1, r2, r3;
@@ -290,13 +263,22 @@ public static String distance(String offset, ArrayList<String[]> code){
         c[i].setopc(hex);// set opcode sa code class
     }
     
+    /**
+     * LOAD STORE 
+     * @param opc
+     * @param base REGISTER OFFSETTTER
+     * @param rt  DESTINATION REGISTER
+     * @param offset
+     * @param c
+     * @param i 
+     */
     public static void ldsd(String opc, String base, String rt, String offset, Code[] c, int i){
         StringBuilder stringBuilder = new StringBuilder();
         String finalString, hexStr;
         char r1, rt2;
         int decimal;
         
-        if(!checkReg(base) && checkReg(rt))
+        if(!checkReg(base) || !checkReg(rt))
              errorscreen.append("Error: Invalid Register.");
         
           r1 = base.charAt(base.length()-1);

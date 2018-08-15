@@ -88,6 +88,7 @@ public class frame extends javax.swing.JFrame{
 
         textarea.setColumns(20);
         textarea.setRows(5);
+        textarea.setText(".data\n.code");
         jScrollPane1.setViewportView(textarea);
 
         errortab.setToolTipText("");
@@ -674,10 +675,6 @@ public class frame extends javax.swing.JFrame{
             
             isError = true;
         }
-        else{
-            errorscreen.append("No errors found.\n");
-        }
-        
         return isError;
     }
     
