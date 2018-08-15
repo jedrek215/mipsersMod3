@@ -507,4 +507,65 @@ public static String distance(String offset, ArrayList<String[]> code){
         c[i].setopc(hex.toUpperCase());
     }
     
+    // daddu, slt, dsubu
+    public static String rType(String inst, String hex1, String hex2){
+        int ans = -1;
+        int num1 = Integer.parseInt(hex1, 16);
+        int num2 = Integer.parseInt(hex2, 16);
+        
+        switch(inst){
+            case "DADDU":  ans = num1 + num2;
+                           break;
+            case "SLT":    if(num1 < num2){
+                              ans = 1;
+                           }
+                           else{
+                              ans = 0;
+                           }
+                           break;
+            case "DSUBU":  ans = num1 - num2;
+                           break;
+        }
+        
+        return decToHex(ans);
+    }
+    
+    // ld, sd, daddiu
+    public static String iType(String inst, String hex1, String hex2, String val, Memory mem){
+        int ans = -1;
+        int num1 = Integer.parseInt(hex1, 16);
+        int num2 = Integer.parseInt(hex2, 16);
+        
+        switch(inst){
+            case "DADDIU": ans = num1 + num2;
+                           return decToHex(ans);
+            case "LD":     val = mem.loadFromMemory(num1 + num2);
+                           return val;
+            case "SD":     mem.storeInMemory(num1 + num2, val);
+                           break;
+        }
+        
+        return "stored";
+    }
+    
+    // bc, bltc
+    public static void jType(String inst, String hex1, String hex2, String hex3, String hex4){
+        int ans = -1;
+        int num1 = Integer.parseInt(hex1, 16);
+        int num2 = Integer.parseInt(hex2, 16);
+        int pc = Integer.parseInt(hex3, 16);
+        int offset = Integer.parseInt(hex4, 16);
+        
+        switch(inst){
+            case "BC":     ans = pc + offset;
+                           break;
+            case "BLTC":   if(num1 < num2){
+                              ans = pc + offset;
+                           }
+                           else{
+                              ans = pc + 4;
+                           }
+                           break;
+        }
+    }
 }
