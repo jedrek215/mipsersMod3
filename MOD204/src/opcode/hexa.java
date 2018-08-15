@@ -510,8 +510,8 @@ public static String distance(String offset, ArrayList<String[]> code){
     // daddu, slt, dsubu
     public static String rType(String inst, String hex1, String hex2){
         int ans = -1;
-        int num1 = Integer.parseInt(hex1, 16);
-        int num2 = Integer.parseInt(hex2, 16);
+        int num1 = Integer.parseInt(hex1, 10);
+        int num2 = Integer.parseInt(hex2, 10);
         
         switch(inst){
             case "DADDU":  ans = num1 + num2;
@@ -533,8 +533,8 @@ public static String distance(String offset, ArrayList<String[]> code){
     // ld, sd, daddiu
     public static String iType(String inst, String hex1, String hex2, String val, Memory mem){
         int ans = -1;
-        int num1 = Integer.parseInt(hex1, 16);
-        int num2 = Integer.parseInt(hex2, 16);
+        int num1 = Integer.parseInt(hex1, 10);
+        int num2 = Integer.parseInt(hex2, 10);
         
         switch(inst){
             case "DADDIU": ans = num1 + num2;
@@ -549,12 +549,12 @@ public static String distance(String offset, ArrayList<String[]> code){
     }
     
     // bc, bltc
-    public static void jType(String inst, String hex1, String hex2, String hex3, String hex4){
+    public static String jType(String inst, String hex1, String hex2, String hex3, String hex4){
         int ans = -1;
-        int num1 = Integer.parseInt(hex1, 16);
-        int num2 = Integer.parseInt(hex2, 16);
-        int pc = Integer.parseInt(hex3, 16);
-        int offset = Integer.parseInt(hex4, 16);
+        int num1 = Integer.parseInt(hex1, 10);
+        int num2 = Integer.parseInt(hex2, 10);
+        int pc = Integer.parseInt(hex3, 10);
+        int offset = Integer.parseInt(hex4, 10);
         
         switch(inst){
             case "BC":     ans = pc + offset;
@@ -567,5 +567,6 @@ public static String distance(String offset, ArrayList<String[]> code){
                            }
                            break;
         }
+        return decToHex(ans);
     }
 }
