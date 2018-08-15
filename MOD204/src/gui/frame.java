@@ -28,7 +28,9 @@ public class frame extends javax.swing.JFrame{
     public static DefaultListModel dm = new DefaultListModel();
     public static Memory memory = new Memory();
     public static Registers[] r = new Registers[32];
-    
+    public int clicks = 0;
+    public static Code[] clickList;
+    public static Pipeline[] pipeList;
     /**
      * Creates new form frame
      */
@@ -390,8 +392,18 @@ public class frame extends javax.swing.JFrame{
         jScrollPane7.setViewportView(jTable2);
 
         jButton1.setText("Execute");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Full Execute");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -628,6 +640,79 @@ public class frame extends javax.swing.JFrame{
         clearTable(memoryTable); // memory tab
         //clearTable(jTable2); // pipeline
     }//GEN-LAST:event_resetButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        clicks++;
+        int i=0;
+        int codeIndex=0;
+        do{
+            if(clickList.length <=clicks){
+                if(clicks==1)
+                    pipeList[i].setIF(clickList[codeIndex]);
+
+                else if(clicks==2){
+                    pipeList[i].setID(clickList[codeIndex-1]);
+                    pipeList[i].setIF(clickList[codeIndex]);
+                }
+                else if(clicks==3){
+                    pipeList[i].setEX(clickList[codeIndex-2]);
+                    pipeList[i].setID(clickList[codeIndex-1]);
+                    pipeList[i].setIF(clickList[codeIndex]);
+                }
+                else if(clicks==4){
+                    pipeList[i].setMEM(clickList[codeIndex-3]);
+                    pipeList[i].setEX(clickList[codeIndex-2]);
+                    pipeList[i].setID(clickList[codeIndex-1]);
+                    pipeList[i].setIF(clickList[codeIndex]);
+                }
+                else if(clicks>=5){
+                    pipeList[i].setWB(clickList[codeIndex-4]);
+                    pipeList[i].setMEM(clickList[codeIndex-3]);
+                    pipeList[i].setEX(clickList[codeIndex-2]);
+                    pipeList[i].setID(clickList[codeIndex-1]);
+                    pipeList[i].setIF(clickList[codeIndex]);
+                }
+            }
+            codeIndex++;
+           
+       DefaultTableModel pipelineModel = (DefaultTableModel) jTable2.getModel();
+			//pipelineModel.addRow(new Object[] {Integer.toHexString(i).toUpperCase(), "00"});
+                        pipelineModel.addColumn(clicks, new Object[]{ pipeList[clicks]});
+        }while(i<clicks);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int codeIndex = 0;
+        for(int i =0; i< clickList.length; i++){
+                if(clicks==1)
+                    pipeList[i].setIF(clickList[codeIndex]);
+
+                else if(clicks==2){
+                    pipeList[i].setID(clickList[codeIndex-1]);
+                    pipeList[i].setIF(clickList[codeIndex]);
+                }
+                else if(clicks==3){
+                    pipeList[i].setEX(clickList[codeIndex-2]);
+                    pipeList[i].setID(clickList[codeIndex-1]);
+                    pipeList[i].setIF(clickList[codeIndex]);
+                }
+                else if(clicks==4){
+                    pipeList[i].setMEM(clickList[codeIndex-3]);
+                    pipeList[i].setEX(clickList[codeIndex-2]);
+                    pipeList[i].setID(clickList[codeIndex-1]);
+                    pipeList[i].setIF(clickList[codeIndex]);
+                }
+                else if(clicks>=5){
+                    pipeList[i].setWB(clickList[codeIndex-4]);
+                    pipeList[i].setMEM(clickList[codeIndex-3]);
+                    pipeList[i].setEX(clickList[codeIndex-2]);
+                    pipeList[i].setID(clickList[codeIndex-1]);
+                    pipeList[i].setIF(clickList[codeIndex]);
+                }
+            }
+        codeIndex++;
+    }//GEN-LAST:event_jButton2ActionPerformed
     
     private void clearTable(javax.swing.JTable j){
         DefaultTableModel mod = (DefaultTableModel) j.getModel();
@@ -870,6 +955,9 @@ public class frame extends javax.swing.JFrame{
     public static void codeParse(ArrayList<String[]> code){
         int shift = 0;
         Code[] c = new Code[code.size()];// Code Class array instantiate
+        Pipeline[] pipeList=new Pipeline[code.size()];
+        clickList=c;
+        
         int countAdd=4096;// for PC
         int k = 4096;
 
