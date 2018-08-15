@@ -76,6 +76,7 @@ public class frame extends javax.swing.JFrame{
         jTable2 = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        resetButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -415,6 +416,13 @@ public class frame extends javax.swing.JFrame{
 
         errortab.addTab("Pipeline", jPanel5);
 
+        resetButton.setText("reset");
+        resetButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -428,6 +436,8 @@ public class frame extends javax.swing.JFrame{
                             .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(button)
+                                .addGap(18, 18, 18)
+                                .addComponent(resetButton)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
@@ -437,7 +447,9 @@ public class frame extends javax.swing.JFrame{
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(button)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(button)
+                    .addComponent(resetButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(errortab, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -509,9 +521,7 @@ public class frame extends javax.swing.JFrame{
                 
     }
     
-    
-    private void buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActionPerformed
-        // TODO add your handling code here:
+    private void startProgram(){
         initializeRegisters();
         String areaText = textarea.getText();
         String[] inputText = areaText.split("\n");
@@ -583,7 +593,11 @@ public class frame extends javax.swing.JFrame{
             for(int i = 4096; i <memory.getMemory().length; i++) {
                 tableModel.setValueAt(memory.getMemoryValue(i), i, 1);
 	}
-
+    }
+    
+    private void buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActionPerformed
+        // TODO add your handling code here:
+        startProgram();
     }//GEN-LAST:event_buttonActionPerformed
     
     private void searchMEMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchMEMActionPerformed
@@ -599,6 +613,11 @@ public class frame extends javax.swing.JFrame{
     private void memoryTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_memoryTableMousePressed
         editMemory();
     }//GEN-LAST:event_memoryTableMousePressed
+
+    private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
+        // TODO add your handling code here:
+        textarea.setText(""); 
+    }//GEN-LAST:event_resetButtonActionPerformed
 
     private void editMemory()
     {
@@ -967,6 +986,7 @@ public class frame extends javax.swing.JFrame{
     public static javax.swing.JTable memoryTable;
     public static javax.swing.JTable opcodeTable;
     public static javax.swing.JTable regTable;
+    private javax.swing.JButton resetButton;
     private javax.swing.JButton searchMEM;
     private javax.swing.JTextArea textarea;
     // End of variables declaration//GEN-END:variables
