@@ -12,14 +12,14 @@ import java.util.ArrayList;
  * @author macintoshuser
  */
 public class Code {
-    private int programCounter;
+    private String programCounter;
     private String Address;
     private String opCode;
     private String Instruction;
     private String BinaryOPC;
     
     public Code(){
-    programCounter=0;
+    programCounter="1000";
     Address="1000";
     opCode="";
     Instruction="";
@@ -28,7 +28,11 @@ public class Code {
     
 }
     public String getAdd(){
-        return Address;
+        return this.Address;
+    }
+    
+    public String getPC(){
+        return this.programCounter;
     }
     
     public String getOPC(){
@@ -45,6 +49,10 @@ public class Code {
     
     public void setAdd(String A){
         this.Address=A;
+    }
+    
+    public void setPC(String A){
+        this.programCounter=A;
     }
     
     public void setopc(String OPC){
