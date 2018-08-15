@@ -1,3 +1,5 @@
 /MOD204/nbproject/private/
 /MOD204/build/
 *.class
+*.properties
+/MOD204/dist/
