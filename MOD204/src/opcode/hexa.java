@@ -32,8 +32,7 @@ public class hexa extends frame{
     public static void ld(String rt, String offset_base, Code[] c, int i){
         System.out.println("ld instruction");
         String opc = "110111";
-        String opc = "110111";
-        //sdfggdhfhjgk
+        
         ldsd(opc,offset_base.substring(offset_base.indexOf("(")+1,offset_base.indexOf(")")),rt, offset_base.substring(offset_base.indexOf(",")+1,offset_base.indexOf("(")),c,i);
     }
     
