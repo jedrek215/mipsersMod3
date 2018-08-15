@@ -23,8 +23,8 @@ public class frame extends javax.swing.JFrame{
 //    public static ArrayList<String> Register = new ArrayList();
 //    public static int nRegistersCount = 32;
     
-    public static ArrayList<String> dataSegment = new ArrayList<>();
-    public static ArrayList<String> codeSegment = new ArrayList<>();
+    public static ArrayList<String> dataSegment;
+    public static ArrayList<String> codeSegment;
     public static DefaultListModel dm = new DefaultListModel();
     public static Memory memory = new Memory();
     public static Registers[] r = new Registers[32];
@@ -89,7 +89,7 @@ public class frame extends javax.swing.JFrame{
 
         textarea.setColumns(20);
         textarea.setRows(5);
-        textarea.setText(".data\n.code");
+        textarea.setText(".data\n.code\n");
         jScrollPane1.setViewportView(textarea);
 
         errortab.setToolTipText("");
@@ -195,7 +195,7 @@ public class frame extends javax.swing.JFrame{
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(181, 181, 181)
                 .addComponent(jToggleButton1)
-                .addContainerGap(238, Short.MAX_VALUE))
+                .addContainerGap(274, Short.MAX_VALUE))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -205,7 +205,7 @@ public class frame extends javax.swing.JFrame{
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(454, Short.MAX_VALUE)
+                .addContainerGap(404, Short.MAX_VALUE)
                 .addComponent(jToggleButton1))
             .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel3Layout.createSequentialGroup()
@@ -523,6 +523,9 @@ public class frame extends javax.swing.JFrame{
     }
     
     private void startProgram(){
+        dataSegment = new ArrayList<>();
+        codeSegment = new ArrayList<>();
+        
         initializeRegisters();
         String areaText = textarea.getText();
         String[] inputText = areaText.split("\n");
@@ -617,9 +620,24 @@ public class frame extends javax.swing.JFrame{
 
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         // TODO add your handling code here:
-        textarea.setText(""); 
+        textarea.setText(".data\n.code\n");
+        errorscreen.setText(""); // error tab
+        clearTable(opcodeTable); // opcode tab
+        clearTable(jTable3); // data tab
+        clearTable(regTable); // register tab
+        clearTable(memoryTable); // memory tab
+        //clearTable(jTable2); // pipeline
     }//GEN-LAST:event_resetButtonActionPerformed
-
+    
+    private void clearTable(javax.swing.JTable j){
+        DefaultTableModel mod = (DefaultTableModel) j.getModel();
+        int rows = mod.getRowCount();
+        while(rows > 0){
+            rows--;
+            mod.removeRow(rows);
+        }
+    }
+    
     private void editMemory()
     {
         int registerSelectedIndex = memoryTable.getSelectedRow();
