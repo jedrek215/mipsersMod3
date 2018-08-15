@@ -26,7 +26,10 @@ public class hexa extends frame{
   
   public static boolean checkReg(String r)
   {
-        return r.toUpperCase().matches("([R][0-31])");       
+        if(r.toUpperCase().matches("([R](3[0-1]|[1-2][0-9]|[0-9])[,])"))
+            return true;
+        
+        return r.toUpperCase().matches("[R](3[0-1]|[1-2][0-9]|[0-9])");    
   }
 
     public static void ld(String rt, String offset_base, Code[] c, int i){
@@ -182,7 +185,10 @@ public static String distance(String offset, ArrayList<String[]> code){
         int decimal;
         
         if(!checkReg(one) || !checkReg(two))
-             errorscreen.append("Error: Invalid Register.");
+         {
+             errorscreen.append("Error: Invalid Register @ line: "+i);
+             errorscreen.append("\n");
+         }
         
         if(one.length() == 3 && two.length() == 3)
         {
@@ -226,23 +232,24 @@ public static String distance(String offset, ArrayList<String[]> code){
     }
     
     
-    /**
-     * DADDU 
-     */
+    
     public static void tempdaddu(String opc, String one, String two, String three, Code[] c, int i){
         StringBuilder stringBuilder = new StringBuilder();
         String finalString, hexStr;
         
      
          if(!checkReg(one) || !checkReg(two) || !checkReg(three))
-             errorscreen.append("Error: Invalid Register.");
+         {
+             errorscreen.append("Error: Invalid Register @ line: "+i);
+             errorscreen.append("\n");
+         }
         
         char r1, r2, r3;
         int decimal;
         r1 = one.charAt(one.length()-2);
         r2 = two.charAt(two.length()-1);
         r3 = three.charAt(three.length()-2);
-        
+              
         stringBuilder.append(opc);
         stringBuilder.append("0");
         stringBuilder.append(Integer.toBinaryString(r1).substring(2));
@@ -268,7 +275,7 @@ public static String distance(String offset, ArrayList<String[]> code){
      * @param opc
      * @param base REGISTER OFFSETTTER
      * @param rt  DESTINATION REGISTER
-     * @param offset
+     * @param offset 
      * @param c
      * @param i 
      */
@@ -279,7 +286,11 @@ public static String distance(String offset, ArrayList<String[]> code){
         int decimal;
         
         if(!checkReg(base) || !checkReg(rt))
-             errorscreen.append("Error: Invalid Register.");
+         {
+             errorscreen.append("Error: Invalid Register @ line: "+i);
+             errorscreen.append("\n");
+         }
+        
         
           r1 = base.charAt(base.length()-1);
           rt2 = rt.charAt(rt.length()-2);
@@ -312,8 +323,11 @@ public static String distance(String offset, ArrayList<String[]> code){
         r1 = rs.charAt(rs.length()-2);
         r2 = rt.charAt(rt.length()-2);
         
-        if(!checkReg(rs) && checkReg(rt))
-             errorscreen.append("Error: Invalid Register.");
+        if(!checkReg(rs) || !checkReg(rt))
+         {
+             errorscreen.append("Error: Invalid Register @ line: "+i);
+             errorscreen.append("\n");
+         }
         
         
         stringBuilder.append(opc);
@@ -347,8 +361,11 @@ public static String distance(String offset, ArrayList<String[]> code){
         r2 = two.charAt(two.length()-1);
         r3 = three.charAt(three.length()-2);
         
-        if(!checkReg(one) && checkReg(two) && checkReg(three))
-             errorscreen.append("Error: Invalid Register.");
+        if(!checkReg(one) || !checkReg(two) || !checkReg(three))
+         {
+             errorscreen.append("Error: Invalid Register @ line: "+i);
+             errorscreen.append("\n");
+         }
         
         stringBuilder.append(opc);
         stringBuilder.append("0");
@@ -400,8 +417,11 @@ public static String distance(String offset, ArrayList<String[]> code){
         r2 = two.charAt(two.length()-1);
         r3 = three.charAt(three.length()-2);
         
-        if(!checkReg(one) && checkReg(two) && checkReg(three))
-             errorscreen.append("Error: Invalid Register.");
+        if(!checkReg(one) || !checkReg(two) || !checkReg(three))
+         {
+             errorscreen.append("Error: Invalid Register @ line: "+i);
+             errorscreen.append("\n");
+         }
         
         stringBuilder.append(opc);
         stringBuilder.append("0");
@@ -433,8 +453,11 @@ public static String distance(String offset, ArrayList<String[]> code){
         r1 = rs.charAt(rs.length()-2);
         r2 = rt.charAt(rt.length()-2);
         
-        if(!checkReg(rs) && checkReg(rt) )
-             errorscreen.append("Error: Invalid Register.");
+        if(!checkReg(rs) || !checkReg(rt))
+         {
+             errorscreen.append("Error: Invalid Register @ line: "+i);
+             errorscreen.append("\n");
+         }
        
         stringBuilder.append(opc);
         stringBuilder.append("0");
