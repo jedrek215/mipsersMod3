@@ -5,6 +5,7 @@
  */
 package opcode;
 
+import gui.frame;
 /**
  *
  * @author macintoshuser
@@ -30,6 +31,7 @@ public void setRegName(String n){
 public String getRValue(){
     return value;
 }
+
 
 public String getRegName(){
     return regName;

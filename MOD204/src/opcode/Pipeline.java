@@ -20,9 +20,9 @@ public class Pipeline {
     private String ID_EX_A;
     private String ID_EX_B;
     private String ID_EX_IMM;
-    private String EX_IMM_IR;
-    private String EX_IMM_B;
-    private String EX_IMM_ALU;
+    private String EX_MEM_IR;
+    private String EX_MEM_B;
+    private String EX_MEM_ALU;
     private int EX_COND;
     private String MEM_WB_IR;
     private String MEM_WB_ALU;
@@ -40,9 +40,9 @@ public class Pipeline {
     ID_EX_A="0000000000000000";
     ID_EX_B="0000000000000000";
     ID_EX_IMM="0000000000000000";
-    EX_IMM_IR="0000000000000000";
-    EX_IMM_B="0000000000000000";
-    EX_IMM_ALU="0000000000000000";
+    EX_MEM_IR="0000000000000000";
+    EX_MEM_B="0000000000000000";
+    EX_MEM_ALU="0000000000000000";
     EX_COND=0;
     MEM_WB_IR="0000000000000000";
     MEM_WB_ALU="0000000000000000";
@@ -67,7 +67,12 @@ public class Pipeline {
     }
     
     public void setEX(Code n){
-    
+        this.EX_MEM_IR = n.getOPC();
+        this.EX_MEM_B= registerList[Integer.parseInt(n.getbinOPC().substring(12,17),10)].getRValue();
+        switch(n.getIns()){
+            
+            case 
+        }
     }
     
     public void setMEM(Code n){
