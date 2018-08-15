@@ -855,6 +855,7 @@ public class frame extends javax.swing.JFrame{
     public static void CodeClass(Code[] c,int i, int countAdd, String INS){
         c[i] = new Code(); //Code Class instantiate
         c[i].setAdd(opcode.hexa.decToHex(countAdd).substring(4));//assign an address
+        c[i].setPC(opcode.hexa.decToHex(countAdd).substring(4));//assign PC
         String formattedString = INS
         .replace(",", "")  //remove the commas
         .replace("[", "")  //remove the right bracket
